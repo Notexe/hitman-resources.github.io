@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bulma.min.css">
+    <title>QuickEdit - Modding</title>
+	<script src="renderer.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script defer src="mod.js"></script>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="level">
+                <div class="level-item">
+                    <h1 class="title is-3" onclick="document.location.href = 'index.html'">QuickEdit</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="height: 5px; background-color: rgb(0, 0, 0, 0.2); border: none; margin-top: 0px; margin-bottom: 0px;">
+    </div>
+    <section class="section">
+        <div class="container">
+            <div class="level">
+                <div class="level-item">
+                    <a class="button is-info" onclick="addObjective()">Add Objective</a>
+                    <a class="button is-link" onclick="missionConfig()">Mission Configuration</a>
+                    <a class="button is-info" onclick="saveMissionScript()">Save Mission Script</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="missionConfigStyling" style="display: none">
+        <div class="container">
+            <label class="checkbox">
+                <input type="checkbox" id="settingEnableSaving">
+                Enable saving?
+            </label>
+            <br><br>
+            Title: <input class="input" id="settingTitle" type="text" placeholder="Title of mission (shown in Destinations)">
+            <br><br>
+            Briefing message: <input class="input" id="settingDescription" type="text" placeholder="Briefing message (shown by clicking on the tile)">
+            <br><br>
+            Location: <div class="select">
+                <select id="settingLocation">
+                    <option>ICA Facility (cruise ship)</option>
+                    <option>Paris</option>
+                    <option>Sapienza</option>
+                    <option>Marrakesh</option>
+                    <option>Bangkok</option>
+                    <option>Colorado</option>
+                    <option>Hokkaido</option>
+                    <option>Hawke's Bay</option>
+                    <option>Miami</option>
+                    <option>Santa Fortuna</option>
+                    <option>Mumbai</option>
+                    <option>Whittleton Creek</option>
+                    <option>Isle of Sgail</option>
+                    <option>New York</option>
+                    <option>Haven Island</option>
+                </select>
+            </div>
+            <br><br>
+            <label class="checkbox">
+                <input type="checkbox" id="settingEnableTimer" oninput="onTimerChange()">
+                Enable time limit?
+            </label>            
+            <div id="settingTimerStyling" style="display: none"><br><br>Time limit: <input class="input" id="settingTimer" type="text" placeholder="Timer (supports S, M:S and H:M:S format) - YOU MUST DEFINE AN EXIT NODE TO USE THIS"></div>
+            <br><br>
+            Extra bricks: <input class="input" id="settingBricks" type="text" placeholder="Extra bricks in format 'BRICK PATH', 'BRICK PATH' (type NONE or leave blank for no extra bricks)">
+            <br><br>
+            Mission replaces: <div class="select">
+                <select id="settingReplaces" oninput="onReplacesChange()">
+                    <option>Arrival</option>
+                    <option>Guided Training</option>
+                    <option>Freeform Training</option>
+                </select>
+            </div>
+            <br><br>
+            <p id="compatiblilityText">Compatibility will show here</p>
+            <br>
+            <a class="button is-link" onclick="saveMissionConfig()">Save Configuration</a>
+        </div>
+    </section>
+    <section class="section" id="newObjective" style="display: none">
+        <div class="container">
+            Objective type: <div class="select" id="dispatchTypeChange" oninput="onTypeChange()">
+                <select id="objectiveType">
+                    <option>Kill</option>
+                    <option>Event-based</option>
+                </select>
+            </div>
+            <br><br>
+            <div id="killObjective" style="display: none">
+                Target: <input class="input" id="objectiveTarget" type="text" placeholder="Target's name">
+                <br><br>
+                Activate on: <div class="select">
+                    <select id="objectiveActivation" oninput="onActivationChange()">
+                        <option>Always active</option>
+                        <option>Previous objective</option>
+                        <option>Custom index</option>
+                    </select>
+                </div>
+                <div id="customActivationStyling"><br><br>Activate after objective at index: <input class="input" id="objectiveActivationCustom" type="text" placeholder="Activate objective after objective at index"></div>
+                <br><br>
+                <label class="checkbox">
+                    <input type="checkbox" id="objectiveExitNode">
+                    Exit node? (finishes mission on completion)
+                </label>
+                <br><br>
+                <a class="button" onclick="newSimpleObjective(document.getElementById('objectiveTarget').value, document.getElementById('objectiveActivation').value, document.getElementById('objectiveActivationCustom').value, document.getElementById('objectiveExitNode').checked)">Create Objective</a>
+            </div>
+            <div id="eventObjective" style="display: none">
+                Complete on: <div class="select">
+                        <select id="objectiveEvent" oninput="onEventChange()">
+                            <option>Alert status changed</option>
+                            <option>All pacified bodies hidden</option>
+                            <option>Body found (accident)</option>
+                            <option>Body found (non-accident)</option>
+                            <option>Body hidden</option>
+                            <option>Camera evidence deleted</option>
+                            <option>Dead body seen</option>
+                            <option>Disguise blown</option>
+                            <option>Door unlocked</option>
+                            <option>Evidence hidden</option>
+                            <option>First missed shot</option>
+                            <option>First non-headshot</option>
+                            <option>Game put on high alert</option>
+                            <option>Guard confiscated weapon</option>
+                            <option>Guard found item</option>
+                            <option>Haven Island pamphlet collected</option>
+                            <option>Murdered body seen</option>
+                            <option>NPC emetic poisoned</option>
+                            <option>NPC investigated distraction</option>
+                            <option>Player arrested</option>
+                            <option>Player caught armed</option>
+                            <option>Player caught in combat</option>
+                            <option>Player changed disguise</option>
+                            <option>Player climbed drainpipe</option>
+                            <option>Player died</option>
+                            <option>Player frisked successfully</option>
+                            <option>Player held an illegal weapon</option>
+                            <option>Player hid in closet/box</option>
+                            <option>Player in combat (GameTension)</option>
+                            <option>Player in combat (HM_InCombat)</option>
+                            <option>Player infected (Patient Zero)</option>
+                            <option>Player killed NPC</option>
+                            <option>Player no longer being hunted (NoHunting)</option>
+                            <option>Player pacified NPC</option>
+                            <option>Player pacified NPC noticed</option>
+                            <option>Player pacified NPC unnoticed</option>
+                            <option>Player performed an agility action</option>
+                            <option>Player recorded by camera</option>
+                            <option>Player removed item from inventory</option>
+                            <option>Player stashed item</option>
+                            <option>Player threw item</option>
+                            <option>Player trespassed</option>
+                            <option>Player spotted</option>
+                            <option>Player wounded</option>
+                            <option>Situation contained</option>
+                            <option>Unnoticed kill</option>
+                            <option>Witnesses saw player</option>
+                        </select>
+                    </div>
+                <label class="checkbox" id="objectiveTargetWanted" style="display: none">
+                    <br><br>
+                    <input type="checkbox" id="objectiveTargetWantedValue" oninput="onTargetingChange()">
+                    Provide a target?
+                </label>
+                <div id="objectiveTargetStyling" style="display: none"><br>Target: <input class="input" id="objectiveTarget2" type="text" placeholder="Target's name"></div>
+                <br><br>
+                Activate on: <div class="select">
+                    <select id="objectiveActivation2" oninput="onActivation2Change()">
+                        <option>Always active</option>
+                        <option>Previous objective</option>
+                        <option>Custom index</option>
+                    </select>
+                </div>
+                <div id="customActivation2Styling"><br><br>Activate after objective at index: <input class="input" id="objectiveActivation2Custom" type="text" placeholder="Objective index to activate after"></div>
+                <br><br>
+                Objective text: <input class="input" id="objectiveBriefing" type="text" placeholder="Objective text (shown on HUD)">
+                <br><br>
+                <label class="checkbox">
+                    <input type="checkbox" id="objectiveExitNode2">
+                    Exit node? (finishes mission on completion)
+                </label>
+                <br><br>
+                <a class="button" onclick="addComplexObjective()">Create Objective</a>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div id="cards">
+            </div>
+        </div>
+    </section>
+    <script src="./renderer.js"></script>
+</body>
+
+</html>
