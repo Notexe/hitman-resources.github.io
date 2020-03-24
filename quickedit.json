@@ -1,6 +1,6 @@
 {
-    "version": 1.5,
-    "changelog": "UI improvements and fixed Move Objective",
+    "version": 1.6,
+    "changelog": "UI improvements, fixed Actorsick and a way to save and load mod data",
     "message": {
         "text": "You aren't meant to be seeing this - tell Atampy26 on Hitmanforum so he can fix it.",
         "showUntilTime": 0
