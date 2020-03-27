@@ -1,6 +1,6 @@
 {
-    "version": 1.8,
-    "changelog": "Added support for mandatory loadouts. Also, item names are now available ('News Paper Roll' instead of a UUID).",
+    "version": 1.81,
+    "changelog": "MAJOR BUG FIX - download or your mods will not allow custom loadouts! Also, improvements to error handling.",
     "message": {
         "text": "You aren't meant to be seeing this - tell Atampy26 on Hitmanforum so he can fix it.",
         "showUntilTime": 0
