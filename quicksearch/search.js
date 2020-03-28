@@ -94,10 +94,10 @@ displayCards = function (cards) {
                 <div class="media">
                     <div class="media-content">
                         <div class="title is-4">
-                            <p>${title}</p>
+                            <p>${title} (${type}${features})</p>
                         </div>
                         <div class="subtitle is-5">
-                            <p>${card.item["ID_"]} (${type}${features})</p>
+                            <p>${card.item["ID_"]}</p>
                         </div>
                     </div>
                 </div>
