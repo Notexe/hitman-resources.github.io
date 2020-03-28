@@ -63,6 +63,10 @@ displayCards = function (cards) {
                 if (card.item.Name_LOC.includes("agencypickup")) {
                     type = "Agency Pickup"
                 }
+            } else if (typeof card.item["Name_LOC"] != "undefined") {
+                if (card.item.Name_LOC.includes("challenge")) {
+                    type = "Challenge"
+                }
             }
                 var features = ""
                 if (typeof card.item["Features_"] != "undefined") {
