@@ -1,8 +1,8 @@
 {
     "version": 2.01,
     "changelog": "2.0 Phase 1 - includes Locations and Snippets!",
-    "beta_version": 2.11,
-    "beta_changelog": "Added the ability to edit Kill and Flow-based objectives.",
+    "beta_version": 2.111,
+    "beta_changelog": "Added the ability to choose a disguise on kill in Conditions.",
     "message": {
         "text": "You aren't meant to be seeing this - tell Atampy26 on Hitmanforum so he can fix it.",
         "showUntilTime": 0
